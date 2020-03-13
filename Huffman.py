@@ -24,6 +24,7 @@ def main():
         bitstring += dict[c]
     print(bitstring)
     bytestring = toBytes(bitstring)
+    print(bytestring)
     
     #write to binary file the encoded version
     with open('test.bin','wb') as file:
@@ -37,15 +38,7 @@ def main():
     #read the data from file as bytes
     with open('test.bin','rb') as file:
         encodeddata =  file.read()
-    
-    #### TODO make bitstring equal
     decodedbits = toBits(encodeddata)
-    
-    #to check if bitstrings are equal ##they are equal except last byte
-    if decodedbits == bitstring:
-        print('true')
-    else :
-        print('false')
     
     #made decode dict
     decodedict = {}
@@ -66,27 +59,25 @@ def toBytes(bstring):
     b = bytearray()
     for i in range(0,len(bstring),8):
         b.append( int(bstring[i:i+8] , 2) )
+    #last byte for number of none trash chars
+    b.append(len(bstring)%8)
     return bytes(b)
 
 def toBits(bytestring):
     b = ''
     lastbyte = ''
     temp = ''
-    for i in range(0,len(bytestring)-1):
+    for i in range(0,len(bytestring)-2):
         for j in range(7,-1,-1):
             b += str( (int(bytestring[i]) >> j ) & 1 )
             
     #last byte to be correct
-    """
-    for j in range (0,8,1):
-        lastbyte = str( (int( bytestring[ len(bytestring)-1 ] ) >> j ) & 1 )
-        if lastbyte == '0':
-            break
+    for j in range (0,bytestring[ len(bytestring)-1 ],1):
+        lastbyte = str( (int( bytestring[ len(bytestring)-2 ] ) >> j ) & 1 )
         temp += lastbyte
     temp = temp[::-1] 
     b+=temp
-    """    
-    print(b)
+    return b
 
 def huffmanDecode (dictionary, text):
     res = ""
@@ -95,7 +86,6 @@ def huffmanDecode (dictionary, text):
             if text.startswith(k):
                 res += dictionary[k]
                 text = text[len(k):]
-    print(res)
     return res
     
 main()
