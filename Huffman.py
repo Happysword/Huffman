@@ -5,29 +5,29 @@ Created on Fri Mar 13 17:34:20 2020
 @author: Seif ElSaeed
 """
 import HuffmanCodes as code
+import os
 def main():
     
-    
+    inputfile = 'test.txt'
+    binaryfile = 'test.bin'
+    decodefile = 'decodedtest.txt'
     ###ENCODING
     
     #open file and put it in a string
-    with open('test.txt', 'r') as myfile:
+    with open(inputfile, 'r') as myfile:
         string = myfile.read()
     
     #Create Dictionary of Code
     dict = code.saad_please_i_need_the_codes(string)
-    print(dict)
     
     #Encode string to byte array using Code Dictionary
     bitstring = ''
     for c in string:
         bitstring += dict[c]
-    print(bitstring)
     bytestring = toBytes(bitstring)
-    print(bytestring)
     
     #write to binary file the encoded version
-    with open('test.bin','wb') as file:
+    with open(binaryfile,'wb') as file:
         file.write(bytestring)
     
     
@@ -36,7 +36,7 @@ def main():
     ###DECODING
     
     #read the data from file as bytes
-    with open('test.bin','rb') as file:
+    with open(binaryfile,'rb') as file:
         encodeddata =  file.read()
     decodedbits = toBits(encodeddata)
     
@@ -50,9 +50,11 @@ def main():
     result = huffmanDecode(decodedict, decodedbits)
     
     #write to decoded file
-    with open('decodedtest.txt','w') as file:
+    with open(decodefile,'w') as file:
         file.write(result)
-    
+        
+    #print ratio of compression    
+    ratio(inputfile,binaryfile)
     
     
 def toBytes(bstring):
@@ -87,6 +89,13 @@ def huffmanDecode (dictionary, text):
                 res += dictionary[k]
                 text = text[len(k):]
     return res
+
+def ratio(inputfile,binaryfile):
+    old = os.path.getsize(inputfile)
+    new = os.path.getsize(binaryfile)
+    print(f'Original file: {old} bytes')
+    print(f'Compressed file: {new} bytes')
+    print('Compressed file to about {}% of original'.format( round( (((old-new)/old)*100), 0)) )
     
 main()
         
