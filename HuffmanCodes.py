@@ -57,9 +57,6 @@ class Node:
         self.frequency = f
 
 
-#test = "aaaaabbbbbbbbbccccccccccccdddddddddddddeeeeeeeeeeeeeeeefffffffffffffffffffffffffffffffffffffffffffff"
-
-
 def saad_please_i_need_the_codes(test):
 
     my_list = []
@@ -84,9 +81,6 @@ def saad_please_i_need_the_codes(test):
         z.right = y
         my_list.append(z)
         heapify_up(my_list)
-
-    for i in my_dictionary:
-        my_dictionary[i] = ''
 
     traverse_heap(my_list[0], my_dictionary)
 
