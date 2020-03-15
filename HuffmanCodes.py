@@ -57,10 +57,7 @@ class Node:
         self.frequency = f
 
 
-#test = "aaaaabbbbbbbbbccccccccccccdddddddddddddeeeeeeeeeeeeeeeefffffffffffffffffffffffffffffffffffffffffffff"
-
-
-def saad_please_i_need_the_codes(test):
+def saad_please_i_need_the_codes(test, root=None):
 
     my_list = []
 
@@ -85,11 +82,23 @@ def saad_please_i_need_the_codes(test):
         my_list.append(z)
         heapify_up(my_list)
 
-    for i in my_dictionary:
-        my_dictionary[i] = ''
-
     traverse_heap(my_list[0], my_dictionary)
     root = my_list[0]
     
     return (my_dictionary,root)
+
+
+# INSTRUCTIONS
+#
+# to make the tree you need to insert the nodes one by one
+# **insert node to the tree:
+# 1-myList.append(my_node)
+# 2-heapify_up(myList)
+#
+# **pop the node with the lowest frequency:
+# my_node = pop_heap(myList)
+#
+# **traverse the heap and get huffman codes in a dictionary
+# traverse_heap(root, my_dictionary)
+
 
