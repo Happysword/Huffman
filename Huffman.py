@@ -8,7 +8,7 @@ import HuffmanCodes as code
 import os
 def main():
     
-    inputfile = 'test.txt'
+    inputfile = 'alice29.txt'
     binaryfile = 'test.bin'
     decodefile = 'decodedtest.txt'
     ###ENCODING
@@ -18,7 +18,7 @@ def main():
         string = myfile.read()
     
     #Create Dictionary of Code
-    dict = code.saad_please_i_need_the_codes(string)
+    (dict,root) = code.saad_please_i_need_the_codes(string)
     
     #Encode string to byte array using Code Dictionary
     bitstring = ''
@@ -47,7 +47,8 @@ def main():
     
     #decoding bitstring
     result = ''
-    result = huffmanDecode(decodedict, decodedbits)
+    result = huffmanDecodeTree(root,decodedbits)
+    
     
     #write to decoded file
     with open(decodefile,'w') as file:
@@ -88,6 +89,20 @@ def huffmanDecode (dictionary, text):
             if text.startswith(k):
                 res += dictionary[k]
                 text = text[len(k):]
+    return res
+
+def huffmanDecodeTree (root,text):
+    res = ""
+    currentNode = root
+    for char in text:
+        if char is '0':
+            currentNode = currentNode.left
+        elif char is '1':
+            currentNode = currentNode.right
+        if currentNode.character is not None:
+            res += currentNode.character
+            currentNode = root
+        
     return res
 
 def ratio(inputfile,binaryfile):

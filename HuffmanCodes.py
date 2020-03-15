@@ -89,6 +89,7 @@ def saad_please_i_need_the_codes(test):
         my_dictionary[i] = ''
 
     traverse_heap(my_list[0], my_dictionary)
-
-    return my_dictionary
+    root = my_list[0]
+    
+    return (my_dictionary,root)
 
